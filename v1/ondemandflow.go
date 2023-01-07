@@ -4,7 +4,7 @@ type OnDemandFlow struct {
 	BaseFlow
 }
 
-func NewOnDemand(id Id, signal Signal, otr Otr, punch Punch, guard Guard) (Flow, error) {
+func NewOnDemandFlow(id Id, signal Signal, otr Otr, punch Punch, guard Guard) (Flow, error) {
 	o := new(OnDemandFlow)
 	if err := o.Init(id, signal, otr, punch, guard); err != nil {
 		return nil, err

@@ -3,7 +3,7 @@ package v1
 import "testing"
 
 func TestNewOnDemandSuccess(t *testing.T) {
-	o, err := NewOnDemand(dummyId, dummySignal, dummyOtr, dummyPunch, dummyGuard)
+	o, err := NewOnDemandFlow(dummyId, dummySignal, dummyOtr, dummyPunch, dummyGuard)
 
 	if err != nil {
 		t.Fatalf("NewOnDemand.err = '%v' | want '%v'", err, nil)
@@ -15,7 +15,7 @@ func TestNewOnDemandSuccess(t *testing.T) {
 }
 
 func TestNewOnDemandFailure(t *testing.T) {
-	o, err := NewOnDemand(dummyId, nil, dummyOtr, dummyPunch, dummyGuard)
+	o, err := NewOnDemandFlow(dummyId, nil, dummyOtr, dummyPunch, dummyGuard)
 
 	if err == nil {
 		t.Fatalf("NewOnDemand.err = '%v' | want not '%v'", err, nil)
@@ -27,7 +27,7 @@ func TestNewOnDemandFailure(t *testing.T) {
 }
 
 func TestOnDemandFlowRunIsNil(t *testing.T) {
-	o, _ := NewOnDemand(dummyId, dummySignal, dummyOtr, dummyPunch, dummyGuard)
+	o, _ := NewOnDemandFlow(dummyId, dummySignal, dummyOtr, dummyPunch, dummyGuard)
 
 	run := o.Run()
 	if run != nil {
