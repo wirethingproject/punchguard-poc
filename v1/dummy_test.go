@@ -1,69 +1,100 @@
-package v1
+package v1_test
 
 import (
-	"errors"
+	"log"
 	"testing"
+
+	v1 "github.com/punchguard/v1"
 )
 
 var (
-	dummyId     Id
-	dummySignal *DummySignal
-	dummyOtr    *DummyOtr
-	dummyPunch  *DummyPunch
-	dummyGuard  *DummyGuard
+	DummyIdTest     v1.Id
+	DummySignalTest *DummySignal
+	DummyOtrTest    *DummyOtr
+	DummyPunchTest  *DummyPunch
+	DummyGuardTest  *DummyGuard
 )
 
 func init() {
-	dummyId = Id{
-		Signal: "s",
-		Otr:    "o",
-		Guard:  "g",
+	DummyIdTest = v1.NewId("s", "o", "g")
+
+	if d, err := v1.NewSignal[DummySignal](DummyIdTest.Signal); err != nil {
+		log.Fatal(err)
+	} else {
+		DummySignalTest = d.(*DummySignal)
 	}
 
-	dummySignal, dummyOtr, dummyPunch, dummyGuard = NewFlowParams[DummySignal, DummyOtr, DummyPunch, DummyGuard]()
+	if d, err := v1.NewOtr[DummyOtr](DummyIdTest.Otr, DummySignalTest.GetSend(), DummySignalTest.GetOnReceive()); err != nil {
+		log.Fatal(err)
+	} else {
+		DummyOtrTest = d.(*DummyOtr)
+	}
 
-	err := InitFlowParams(dummySignal, dummyOtr, dummyPunch, dummyGuard)
-	if err != nil {
-		panic(err)
+	if d, err := v1.NewPunch[DummyPunch](DummyOtrTest.GetPunchSend(), DummyOtrTest.GetPunchOnReceive()); err != nil {
+		log.Fatal(err)
+	} else {
+		DummyPunchTest = d.(*DummyPunch)
+	}
+
+	if d, err := v1.NewGuard[DummyGuard](DummyIdTest.Guard, DummyPunchTest.GetOnPeers()); err != nil {
+		log.Fatal(err)
+	} else {
+		DummyGuardTest = d.(*DummyGuard)
 	}
 }
 
 type DummySignal struct {
-	BaseSignal
+	v1.BaseSignal
 }
 
-func (d *DummySignal) Run() *Control { return nil }
+func (d *DummySignal) Start() v1.Controlling { return nil }
 
-type DummySignalInitFail struct {
+type DummySignalOnReadyNil struct {
 	DummySignal
 }
 
-func (d *DummySignalInitFail) Init() error {
-	return errors.New("err")
-}
+func (b *DummySignalOnReadyNil) GetOnReady() <-chan struct{} { return nil }
 
 type DummyOtr struct {
-	BaseOtr
+	v1.BaseOtr
 }
 
 type DummyPunch struct {
-	BasePunch
+	v1.BasePunch
 }
 
 func (d *DummyPunch) RunOnce() error { return nil }
 
 type DummyGuard struct {
-	BaseGuard
+	v1.BaseGuard
 }
 
-func (d *DummyGuard) Run() *Control { return nil }
+func (d *DummyGuard) Start() v1.Controlling { return nil }
+
+type DummyGuardOnConnectedNil struct {
+	DummyGuard
+}
+
+func (b *DummyGuardOnConnectedNil) GetOnConnected() <-chan struct{} { return nil }
+
+type DummyGuardOnDisconnectedNil struct {
+	DummyGuard
+}
+
+func (b *DummyGuardOnDisconnectedNil) GetOnDisconnected() <-chan struct{} { return nil }
+
+type DummyFlow struct {
+	v1.BaseFlow
+}
+
+func (d *DummyFlow) Start() v1.Controlling { return nil }
 
 func TestDummySignalRunIsNil(t *testing.T) {
 	d := new(DummySignal)
 
-	run := d.Run()
+	run := d.Start()
 	if run != nil {
-		t.Fatalf("DummySignal.Run() = '%v', want '%v'", run, nil)
+		t.Fatalf("DummySignal.Start() = '%v', want '%v'", run, nil)
 	}
 }
 
@@ -79,8 +110,17 @@ func TestDummyPunchRunOnceIsNil(t *testing.T) {
 func TestDummyGuardRunIsNil(t *testing.T) {
 	d := new(DummyGuard)
 
-	run := d.Run()
+	run := d.Start()
 	if run != nil {
-		t.Fatalf("DummyGuard.Run() = '%v', want '%v'", run, nil)
+		t.Fatalf("DummyGuard.Start() = '%v', want '%v'", run, nil)
+	}
+}
+
+func TestDummyFlowRunIsNil(t *testing.T) {
+	d := new(DummyFlow)
+
+	run := d.Start()
+	if run != nil {
+		t.Fatalf("DummyFlow.Start() = '%v', want '%v'", run, nil)
 	}
 }

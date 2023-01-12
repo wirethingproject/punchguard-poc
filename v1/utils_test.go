@@ -1,24 +1,25 @@
-package v1
+package v1_test
 
 import (
-	"errors"
 	"testing"
+
+	v1 "github.com/punchguard/v1"
 )
 
 type channelTypes interface {
-	string | struct{} | Peers
+	string | struct{} | v1.Peers
 }
 
-func receiveIsOpen[T channelTypes](ch <-chan T) bool {
+func ReceiveIsOpen[T channelTypes](ch <-chan T) (<-chan T, bool) {
 	open := ch != nil
 	select {
 	case _, open = <-ch:
 	default:
 	}
-	return open
+	return ch, open
 }
 
-func sendIsOpen[T channelTypes](ch chan<- T) bool {
+func SendIsOpen[T channelTypes](ch chan<- T) (chan<- T, bool) {
 	defer func() {
 		recover()
 	}()
@@ -30,98 +31,55 @@ func sendIsOpen[T channelTypes](ch chan<- T) bool {
 	default:
 	}
 
-	return open
-}
-
-func errorToString(err error) string {
-	if err == nil {
-		return "nil"
-	}
-	return err.Error()
+	return ch, open
 }
 
 func TestReceiveIsOpenTrue(t *testing.T) {
-	c := make(<-chan string)
+	ch := make(<-chan string)
 
-	open := receiveIsOpen(c)
-
-	want := true
-	if open != want {
-		t.Fatalf("receiveIsOpen() = '%v', want '%v'", open, want)
+	if receive, open := ReceiveIsOpen(ch); receive == nil || !open {
+		t.Fatalf("ReceiveIsOpen() = '%v', open = '%v' | want '%s', open = '%v'", receive, open, "not <nil>", true)
 	}
 }
 
 func TestReceiveIsOpenFalse(t *testing.T) {
-	c := make(chan string)
-	close(c)
+	ch := make(chan string)
+	close(ch)
 
-	open := receiveIsOpen(c)
-
-	want := false
-	if open != want {
-		t.Fatalf("receiveIsOpen() = '%v', want '%v'", open, want)
+	if receive, open := ReceiveIsOpen(ch); receive == nil || open {
+		t.Fatalf("ReceiveIsOpen() = '%v', open = '%v' | want '%s', open = '%v'", receive, open, "not <nil>", false)
 	}
 }
 
 func TestReceiveIsOpenNil(t *testing.T) {
-	var c chan string
+	var ch chan string
 
-	open := receiveIsOpen(c)
-
-	want := false
-	if open != want {
-		t.Fatalf("receiveIsOpen() = '%v', want '%v'", open, want)
+	if receive, open := ReceiveIsOpen(ch); receive != nil || open {
+		t.Fatalf("ReceiveIsOpen() = '%v', open = '%v' | want '%s', open = '%v'", receive, open, "<nil>", false)
 	}
 }
 
 func TestSendIsOpenTrue(t *testing.T) {
-	c := make(chan string)
+	ch := make(chan string)
 
-	open := sendIsOpen(c)
-
-	want := true
-	if open != want {
-		t.Fatalf("sendIsOpen() = '%v', want '%v'", open, want)
+	if send, open := SendIsOpen(ch); send == nil || !open {
+		t.Fatalf("SendIsOpen() = '%v', open = '%v' | want '%s', open = '%v'", send, open, "not <nil>", true)
 	}
 }
 
 func TestSendIsOpenFalse(t *testing.T) {
-	c := make(chan string)
-	close(c)
+	ch := make(chan string)
+	close(ch)
 
-	open := sendIsOpen(c)
-
-	want := false
-	if open != want {
-		t.Fatalf("sendIsOpen() = '%v', want '%v'", open, want)
+	if send, open := SendIsOpen(ch); send != nil || open {
+		t.Fatalf("SendIsOpen() = '%v', open = '%v' | want '%s', open = '%v'", send, open, "not <nil>", false)
 	}
 }
 
 func TestSendIsOpenNil(t *testing.T) {
-	var c chan string
+	var ch chan string
 
-	open := sendIsOpen(c)
-
-	want := false
-	if open != want {
-		t.Fatalf("sendIsOpen() = '%v', want '%v'", open, want)
-	}
-}
-
-func TestErrorToStringIsNil(t *testing.T) {
-	s := errorToString(nil)
-
-	want := "nil"
-	if s != "nil" {
-		t.Fatalf("errorToString() = '%v', want '%v'", s, want)
-	}
-}
-
-func TestErrorToStringNotNil(t *testing.T) {
-	s := errorToString(errors.New("err"))
-
-	want := "err"
-	if s != "err" {
-		t.Fatalf("errorToString() = '%v', want '%v'", s, want)
+	if send, open := SendIsOpen(ch); send != nil || open {
+		t.Fatalf("ReceiveIsOpen() = '%v', open = '%v' | want '%s', open = '%v'", send, open, "<nil>", false)
 	}
 }
