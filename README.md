@@ -1,6 +1,6 @@
-# PunchGuard - behind nat p2p network
+# PunchGuard - behind nat p2p vpn
 
-This project's goal is to establish peer-to-peer connections between devices that are behind NAT in the simplest way possible without the need to use a service that has a login or to manage a public facing server.
+This project's goal is to establish peer-to-peer vpn connections between devices that are behind NAT in the simplest way possible without the need to use a service from a company that has a login or manage a public facing server yourself.
 
 ## Security warning
 
