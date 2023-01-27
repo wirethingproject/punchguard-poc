@@ -4,7 +4,7 @@ This project aims to establish peer-to-peer vpn connections between devices that
 
 ## Security Warning
 
-This project's code and some of the cryptographic libraries it uses have not been formally audited and therefore there is no way to guarantee that it's free of security issues. Before use, consider this information in your risk analysis.
+This project's code and some of the cryptographic libraries it uses have not been formally audited and therefore there is no way to guarantee that it's free of security issues. Before use, consider this information in your risk assessment.
 
 ## History
 
@@ -13,3 +13,5 @@ This project was born from the impossibility of making a simple VPN connection b
 It is possible to solve this problem using the [ICE](https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment) protocol that do a [hole punching](https://en.wikipedia.org/wiki/Hole_punching_(networking)) for NAT traversal, the same used for VoIP communications. The problem with this protocol is that it relies on an already established connection between the two devices to exchange information on how to establish this new connection. It's the chicken-and-egg problem and this is where other solutions need an open Internet service and require a login from you.
 
 There aren't many alternatives, but luckily it's possible to make two devices communicate without login using p2p instant messaging. Initially [Tox](https://github.com/TokTok/c-toxcore) will be used, because it is simple to integrate and meets the requirement of not having a login and central servers (the network is made up of its users), in the future other alternatives will be considered.
+
+Why Go? There is concurrency here, Go makes solving concurrent problems easier, although solving concurrent problems will never be easy.
