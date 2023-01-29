@@ -62,4 +62,6 @@ The plan is to have a stable version 1.0.0 as soon as possible, for this only th
 - Signaling using TOR
 - Signaling using a server
 - Guard using OpenVPN
-- OS/Arch: Darwin [arm64], Windows
+- OS/Arch:
+  - Darwin: arm64
+  - Windows
