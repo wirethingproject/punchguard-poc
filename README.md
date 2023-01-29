@@ -1,14 +1,14 @@
 # PunchGuard - behind nat p2p vpn
 
-This project aims to establish peer-to-peer vpn connections between devices that are behind NAT in the simplest and security way possible without the need to use a service from a company that has a login or manage a public facing server yourself.
+This project aims to establish peer-to-peer vpn connections between devices that are behind NAT in the simplest and secure way possible without the need to use a service from a company that requires a login or manage a public facing server yourself.
 
 Project status: proof-of-concept worked, now the focus is on making it generally usable.
 
 ## Security Warning
 
-This project's code and some of the cryptographic libraries it uses have not been formally audited and therefore there is no way to guarantee that it's free of security issues. Before use, consider this information in your risk assessment.
+This project's code and some of the cryptographic libraries it uses have not been formally audited and therefore there is no way to guarantee that it's free of security bugs. Before use, consider this information in your risk assessment.
 
-The biggest problem in using a software like this is the protection of your private keys, if one of the devices is compromised these keys can be used to establish a connection with the other pair.
+The biggest problem in using a software like that is the protection of your private keys, if one of the devices is compromised these keys can be used to establish a connection with the other pair. However, if your device has been compromised, chances are these private keys are the least of your problems.
 
 # History
 
@@ -40,7 +40,7 @@ The plan is to have a stable version 1.0.0 as soon as possible, for this only th
 - A stable implementation-agnostic API
 - Command line and daemon in a single binary
 - One-to-one/single peer only configuration
-- Manual setup and pairing
+- Manual setup and pairing, using file transfer or copy-and-paste
 - UDP only ICE
 - Comprehensive test coverage
 - Setup and configuration of network interfaces
@@ -56,6 +56,8 @@ The plan is to have a stable version 1.0.0 as soon as possible, for this only th
 - Secure firewall rules for this VPN connection
 - A SOCKS Proxy flow that I don't think it's a good idea since using WireGuard is more secure, but maybe someone can't use UDP
 - TCP ICE
+- Protocol for no manual pairing using the signaling implementation
 - Signaling using TOR
+- Signaling using a server
 - Guard using OpenVPN
 - OS/Arch: Darwin [arm64], Windows
