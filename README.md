@@ -45,7 +45,9 @@ The plan is to have a stable version 1.0.0 as soon as possible, for this only th
 - Comprehensive test coverage
 - Setup and configuration of network interfaces
 - Security awareness and considerations
-- OS/Arch: Linux [amd64, armv6l], Darwin [amd64]
+- OS/Arch:
+  - Linux: amd64, armv6l
+  - Darwin: amd64
 
 ## Future
 
