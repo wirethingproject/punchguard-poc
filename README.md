@@ -28,7 +28,7 @@ Also for portability, safe memory, speed, and simplicity, but mostly for the sin
 
 # Roadmap
 
-The plan is to have a stable version 1.0.0 as soon as possible, for this only the minimum necessary features to work will be included.
+The plan is to have a stable version 1.0.0 as soon as possible. To achieve this, only the minimum necessary features to work will be included.
 
 ## 1.0.0
 
@@ -49,7 +49,7 @@ The plan is to have a stable version 1.0.0 as soon as possible, for this only th
   - Linux: amd64, armv6l
   - Darwin: amd64
 
-## Future
+## Future Work
 
 - Mobile library for embedding
 - A mobile-to-desktop flow that constantly punches for the best connection
@@ -60,7 +60,7 @@ The plan is to have a stable version 1.0.0 as soon as possible, for this only th
 - TCP ICE
 - Protocol for no manual pairing using the signaling implementation
 - Signaling using TOR
-- Signaling using a server
+- Signaling using a central service or server
 - Guard using OpenVPN
 - OS/Arch:
   - Darwin: arm64
