@@ -65,3 +65,7 @@ The plan is to have a stable version 1.0.0 as soon as possible. To achieve this,
 - OS/Arch:
   - Darwin: arm64
   - Windows
+
+# License
+
+PunchGuard source code is licensed under [MIT License](https://opensource.org/licenses/MIT). You can find the complete text in [LICENSE](LICENSE).
