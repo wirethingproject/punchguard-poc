@@ -1,9 +1,9 @@
-package v1
+package punchguard
 
 type Id struct {
-	Signal string
-	Otr    string
-	Guard  string
+	Signaling string
+	Otr       string
+	Guard     string
 }
 
 type Peer struct {
@@ -16,11 +16,17 @@ type Peers struct {
 	Remote Peer
 }
 
-func NewId(signal, otr, guard string) Id {
+type Event struct{}
+type ReceiveEvent <-chan Event
+type StoppedEvent ReceiveEvent
+type ReceiveString <-chan string
+type ReceivePeers <-chan Peers
+
+func NewId(signaling, otr, guard string) Id {
 	return Id{
-		Signal: signal,
-		Otr:    otr,
-		Guard:  guard,
+		Signaling: signaling,
+		Otr:       otr,
+		Guard:     guard,
 	}
 }
 
@@ -35,4 +41,8 @@ func NewPeers(localAddress string, localPort int, remoteAddress string, remotePo
 			Port:    remotePort,
 		},
 	}
+}
+
+func NewEvent() Event {
+	return Event{}
 }
