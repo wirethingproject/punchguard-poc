@@ -46,7 +46,7 @@ The plan is to have a stable version 1.0.0 as soon as possible. To achieve this,
 - Setup and configuration of network interfaces
 - Security awareness and considerations
 - OS/Arch:
-  - Linux: amd64, armv6l
+  - Linux: amd64, arm
   - Darwin: amd64
 
 ## Future Work
@@ -59,7 +59,7 @@ The plan is to have a stable version 1.0.0 as soon as possible. To achieve this,
 - Secure firewall rules for this VPN connection
 - A SOCKS Proxy flow that I don't think it's a good idea since using WireGuard is more secure, but maybe someone can't use UDP
 - TCP ICE
-- Protocol for no manual pairing using the signaling implementation
+- Protobuf protocol for no manual pairing using the signaling implementation
 - Signaling using TOR
 - Signaling using a central service or server
 - Guard using OpenVPN
