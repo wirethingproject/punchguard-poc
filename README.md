@@ -51,6 +51,7 @@ The plan is to have a stable version 1.0.0 as soon as possible. To achieve this,
 
 ## Future Work
 
+- Replace Tox C implementation by a native Go code or use other library
 - Mobile library for embedding
 - A mobile-to-desktop flow that constantly punches for the best connection
 - If possible, a device-to-server flow that supports many-to-one/multiple peers configuration
