@@ -1,5 +1,7 @@
 # PunchGuard - behind nat p2p vpn
 
+**This repository served to prove the initial idea, but was archived because it ended up being too complex to be useful**
+
 This project aims to establish peer-to-peer vpn connections between devices that are behind NAT in the simplest and secure way possible without the need to use a service from a company that requires a login or manage a public facing server yourself.
 
 Project status: proof-of-concept worked, now the focus is on making it generally usable.
